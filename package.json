@@ -1,0 +1,21 @@
+{
+  "name": "action-sym-cli",
+  "type": "module",
+  "description": "GitHub Action for Symbiosis - sym CLI",
+  "scripts": {
+    "lint": "eslint **/*.js",
+    "package": "ncc build index.js -o dist",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.1.1",
+    "@actions/tool-cache": "^2.0.1"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.36.0",
+    "eslint": "^8.31.0",
+    "husky": "^8.0.0"
+  }
+}

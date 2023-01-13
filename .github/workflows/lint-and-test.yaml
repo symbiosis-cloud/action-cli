@@ -1,0 +1,63 @@
+on: [push, pull_request_target]
+
+name: Lint and test
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - run: |-
+            npm install
+            npm lint
+
+  package_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: "Ensure that code has been packaged and commited"
+        run: |-
+            npm install
+            npm run package
+            git diff --exit-code dist/index.js || \
+              (echo -e "\nPlease run 'yarn package' and commit the results" && exit 1)
+
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install sym CLI
+        uses: ./
+        with:
+          api-key: ${{ secrets.SYMBIOSIS_API_KEY }}
+
+      - name: Verify installation
+        run: sym version
+
+      - name: Verify log-in
+        run: sym cluster list
+
+  test-version:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install sym CLI
+        uses: ./
+        with:
+          token: ${{ secrets.SYMBIOSIS_API_KEY }}
+          version: 0.0.9
+
+      - name: Verify installation of correct version
+        run: |
+          VERSION=$(sym version | tail -1 | cut -f4 -d' ')
+          if [ "$VERSION" != "0.0.9" ]; then exit 1; fi
+
+      - name: Verify log-in
+        run: sym cluster list

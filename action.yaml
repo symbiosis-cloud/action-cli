@@ -1,0 +1,16 @@
+name: 'GitHub Action for Symbiosis - install symcli'
+description: 'Manage Symbiosis with symcli'
+author: 'Buster Styren <buster@symbiosis.host>'
+branding:
+  icon: 'terminal'
+  color: 'gray-dark'
+inputs:
+  version:
+    description: 'Version of symcli to install'
+    default: '0.0.9'
+  api-key:
+    description: 'Symbiosis API key'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
