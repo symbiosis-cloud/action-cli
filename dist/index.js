@@ -13980,8 +13980,8 @@ async function fetchLatestVersionFromCliReleases() {
 async function main() {
 	try {
 		let version = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('version');
-		if ((!version) || (version.toLowerCase() === 'latest')) {
-			version = await fetchLatestVersionFromCliReleases();
+    if ((!version) || (version.toLowerCase() === 'latest')) {
+      version = await fetchLatestVersionFromCliReleases();
     }
     var path = _actions_tool_cache__WEBPACK_IMPORTED_MODULE_2__.find("sym", version);
     if (!path) {
@@ -13996,9 +13996,9 @@ async function main() {
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.setSecret(apiKey);
     await _actions_exec__WEBPACK_IMPORTED_MODULE_1__.exec('sym config init', [apiKey]);
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`successfully configured sym API key`);
-	} catch (error) {
-		_actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
-	}
+  } catch (error) {
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
+  }
 }
 
 main();
