@@ -3,7 +3,7 @@
   "type": "module",
   "description": "GitHub Action for Symbiosis - sym CLI",
   "scripts": {
-    "lint": "eslint **/*.js",
+    "lint": "eslint index.js",
     "package": "ncc build index.js -o dist",
     "prepare": "husky install"
   },
