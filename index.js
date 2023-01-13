@@ -1,6 +1,8 @@
 import core from '@actions/core';
 import exec from '@actions/exec';
 import tc from '@actions/tool-cache';
+import { Octokit } from '@octokit/rest';
+
 
 const baseDownloadURL = "https://github.com/symbiosis-cloud/cli/releases/download"
 
@@ -17,9 +19,21 @@ async function downloadCli(version) {
 	return tc.extractTar(download);
 }
 
+async function fetchLatestVersionFromCliReleases() {
+	const octokit = new Octokit();
+	const latestRelease = await octokit.repos.getLatestRelease({
+		owner: 'symbiosis-cloud',
+		repo: 'cli'
+	});
+	return latestRelease.data.name;
+}
+
 async function main() {
-	const version = core.getInput('version');
 	try {
+		let version = core.getInput('version');
+		if ((!version) || (version.toLowerCase() === 'latest')) {
+			version = fetchLatestVersionFromCliReleases();
+    }
     var path = tc.find("sym", version);
     if (!path) {
       const installPath = await downloadCli(version);

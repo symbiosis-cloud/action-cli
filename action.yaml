@@ -7,7 +7,7 @@ branding:
 inputs:
   version:
     description: 'Version of symcli to install'
-    default: '0.0.9'
+    default: 'latest'
   api-key:
     description: 'Symbiosis API key'
     required: true
