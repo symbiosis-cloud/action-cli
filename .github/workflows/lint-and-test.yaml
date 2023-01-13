@@ -7,8 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: |-
-            yarn
-            yarn lint
+            npm install
+            npm run lint
 
   package-check:
     runs-on: ubuntu-latest
@@ -16,10 +16,10 @@ jobs:
       - uses: actions/checkout@master
       - name: "Ensure that code has been packaged and commited"
         run: |-
-          yarn
-          yarn package
+          npm install
+          npm run package
           git diff --exit-code dist/index.js || \
-            (echo -e "\nPlease run 'yarn package' and commit the results" && exit 1)
+            (echo -e "\nPlease run 'npm run package' and commit the results" && exit 1)
 
   test:
     runs-on: ${{ matrix.os }}

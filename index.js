@@ -24,14 +24,14 @@ async function fetchLatestVersionFromCliReleases() {
 		owner: 'symbiosis-cloud',
 		repo: 'cli'
 	});
-	return latestRelease.data.name;
+	return latestRelease.data.name.substring(1);
 }
 
 async function main() {
 	try {
 		let version = core.getInput('version');
-		if ((!version) || (version.toLowerCase() === 'latest')) {
-			version = fetchLatestVersionFromCliReleases();
+    if ((!version) || (version.toLowerCase() === 'latest')) {
+      version = await fetchLatestVersionFromCliReleases();
     }
     var path = tc.find("sym", version);
     if (!path) {
@@ -46,9 +46,9 @@ async function main() {
     core.setSecret(apiKey);
     await exec.exec('sym config init', [apiKey]);
     core.info(`successfully configured sym API key`);
-	} catch (error) {
-		core.setFailed(error.message);
-	}
+  } catch (error) {
+    core.setFailed(error.message);
+  }
 }
 
 main();

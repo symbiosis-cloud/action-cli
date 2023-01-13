@@ -13974,14 +13974,14 @@ async function fetchLatestVersionFromCliReleases() {
 		owner: 'symbiosis-cloud',
 		repo: 'cli'
 	});
-	return latestRelease.data.name;
+	return latestRelease.data.name.substring(1);
 }
 
 async function main() {
 	try {
 		let version = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('version');
 		if ((!version) || (version.toLowerCase() === 'latest')) {
-			version = fetchLatestVersionFromCliReleases();
+			version = await fetchLatestVersionFromCliReleases();
     }
     var path = _actions_tool_cache__WEBPACK_IMPORTED_MODULE_2__.find("sym", version);
     if (!path) {
