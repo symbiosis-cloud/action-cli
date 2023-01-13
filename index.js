@@ -3,7 +3,6 @@ import exec from '@actions/exec';
 import tc from '@actions/tool-cache';
 import { Octokit } from '@octokit/rest';
 
-
 const baseDownloadURL = "https://github.com/symbiosis-cloud/cli/releases/download"
 
 async function downloadCli(version) {
