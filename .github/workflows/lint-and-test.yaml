@@ -7,8 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: |-
-            npm install
-            npm lint
+            yarn
+            yarn lint
 
   package_check:
     runs-on: ubuntu-latest
@@ -16,10 +16,10 @@ jobs:
       - uses: actions/checkout@master
       - name: "Ensure that code has been packaged and commited"
         run: |-
-            npm install
-            npm run package
-            git diff --exit-code dist/index.js || \
-              (echo -e "\nPlease run 'yarn package' and commit the results" && exit 1)
+          yarn
+          yarn package
+          git diff --exit-code dist/index.js || \
+            (echo -e "\nPlease run 'yarn package' and commit the results" && exit 1)
 
   test:
     runs-on: ${{ matrix.os }}
@@ -51,7 +51,7 @@ jobs:
       - name: Install sym CLI
         uses: ./
         with:
-          token: ${{ secrets.SYMBIOSIS_API_KEY }}
+          api-key: ${{ secrets.SYMBIOSIS_API_KEY }}
           version: 0.0.9
 
       - name: Verify installation of correct version
